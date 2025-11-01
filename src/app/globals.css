@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  
+  /* Kali theme colors */
+  --kali-bg: #0a0c14;
+  --kali-panel: #0f121e;
+  --kali-accent: #00bcd4;
+  --kali-hover: #0097a7;
+  --kali-border: #1a1f35;
+  --kali-text: #e8e8e8;
+  --kali-text-secondary: #9ca3af;
+  --kali-success: #4ade80;
+  --kali-warning: #fbbf24;
+  --kali-error: #ef4444;
+}
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--kali-bg);
+  color: var(--kali-text);
+  font-family: 'JetBrains Mono', monospace;
+  user-select: none;
+  overflow: hidden;
+}
