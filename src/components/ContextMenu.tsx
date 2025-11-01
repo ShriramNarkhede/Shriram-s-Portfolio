@@ -35,7 +35,7 @@ export default function ContextMenu({ x, y, onClose }: ContextMenuProps) {
       action: () => {
         openWindow({
           id: "settings",
-          title: "Settings",
+          title: "",
           component: "settings",
           isMinimized: false,
           isMaximized: false,
