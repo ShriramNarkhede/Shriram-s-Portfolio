@@ -2,7 +2,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Trash2, Settings, Terminal, FolderOpen, Globe } from "lucide-react";
+import {
+  Github,
+  Linkedin,
+  Trash2,
+  Settings,
+  Terminal,
+  FolderOpen,
+  Globe,
+} from "lucide-react";
 import { useWindowManager } from "@/state/useWindowManager";
 import { useState } from "react";
 
@@ -105,33 +113,33 @@ export default function Dock() {
       >
         {/* Glow effect */}
         <div className="absolute inset-0 blur-2xl bg-kali-accent/20 rounded-3xl" />
-        
+
         {/* Main dock container */}
-        <div className="relative glass-strong px-2 md:px-3 py-2 md:py-3 rounded-2xl md:rounded-3xl flex items-center justify-center gap-1 md:gap-2 border border-white/10 noise-overlay overflow-x-auto no-scrollbar max-w-[95vw] md:max-w-none mx-auto">
+        <div className="relative glass-strong px-2 md:px-3 py-2 md:py-3 rounded-2xl md:rounded-3xl flex items-center justify-center gap-1 md:gap-2 border border-white/10 noise-overlay overflow-visible no-scrollbar max-w-[95vw] md:max-w-none mx-auto">
           {/* Top highlight line */}
           <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-          
+
           {apps.map((app, index) => (
             <motion.div
               key={app.id}
               className="relative flex items-center justify-center"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ 
+              transition={{
                 delay: index * 0.05,
                 duration: 0.4,
-                ease: [0.25, 0.46, 0.45, 0.94]
+                ease: [0.25, 0.46, 0.45, 0.94],
               }}
             >
               <motion.button
                 className="relative group flex items-center justify-center"
                 whileHover={{ scale: 1.15, y: -12 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 400, 
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
                   damping: 25,
-                  duration: 0.3
+                  duration: 0.3,
                 }}
                 onHoverStart={() => setHoveredApp(app.id)}
                 onHoverEnd={() => setHoveredApp(null)}
@@ -147,14 +155,16 @@ export default function Dock() {
                 <div className="relative w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl glass-panel group-hover:glass-accent flex items-center justify-center transition-all duration-300 ease-out border border-white/10 group-hover:border-white/30">
                   {/* Shimmer effect */}
                   <div className="absolute inset-0 rounded-xl md:rounded-2xl shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
-                  <motion.div 
+
+                  <motion.div
                     className="relative flex items-center justify-center text-kali-accent"
                     style={{ color: app.color || "#00bcd4" }}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
                   >
-                    <div className="flex items-center justify-center w-5 h-5 md:w-7 md:h-7">{app.icon}</div>
+                    <div className="flex items-center justify-center w-5 h-5 md:w-7 md:h-7">
+                      {app.icon}
+                    </div>
                   </motion.div>
                 </div>
 
@@ -172,16 +182,16 @@ export default function Dock() {
                   initial={{ opacity: 0, y: 10, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                  transition={{ 
-                    duration: 0.2, 
-                    ease: [0.25, 0.46, 0.45, 0.94]
+                  transition={{
+                    duration: 0.2,
+                    ease: [0.25, 0.46, 0.45, 0.94],
                   }}
                   className="absolute -top-14 left-1/2 -translate-x-1/2 pointer-events-none"
                 >
                   <div className="glass-strong px-4 py-2 rounded-xl border border-white/10 noise-overlay">
                     {/* Top arrow */}
                     <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 glass-strong border-r border-b border-white/10" />
-                    
+
                     <span className="text-xs text-kali-text font-medium whitespace-nowrap relative z-10">
                       {app.label}
                     </span>

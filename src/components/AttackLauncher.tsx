@@ -79,7 +79,7 @@ export default function AttackLauncher({ onClose }: AttackLauncherProps) {
       className="fixed top-14 right-2 md:right-4 rounded-2xl md:rounded-3xl overflow-hidden w-[calc(100vw-1rem)] max-w-80 kali-shadow-lg z-50"
       onClick={(e) => e.stopPropagation()}
       style={{
-        background: 'rgba(12, 14, 24, 0.95)',
+        background: 'rgba(12, 14, 24, 0.75)',
         backdropFilter: 'blur(32px) saturate(180%)',
         WebkitBackdropFilter: 'blur(32px) saturate(180%)',
         border: '1px solid rgba(255, 255, 255, 0.2)',

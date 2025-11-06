@@ -95,7 +95,7 @@ export default function AppLauncher({ onClose }: AppLauncherProps) {
       className="fixed top-20 left-1/2 -translate-x-1/2 rounded-2xl md:rounded-3xl overflow-hidden w-[calc(100vw-2rem)] max-w-[600px] kali-shadow-lg z-50"
       onClick={(e) => e.stopPropagation()}
       style={{
-        background: 'rgba(12, 14, 24, 0.95)',
+        background: 'rgba(12, 14, 24, 0.75)',
         backdropFilter: 'blur(32px) saturate(180%)',
         WebkitBackdropFilter: 'blur(32px) saturate(180%)',
         border: '1px solid rgba(255, 255, 255, 0.2)',
