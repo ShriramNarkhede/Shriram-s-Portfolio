@@ -81,7 +81,7 @@ export default function About() {
                 transition={{ delay: 0.4 }}
                 className="text-kali-accent text-base md:text-xl font-medium drop-shadow px-4"
               >
-                Full Stack Developer & Cyber Security Enthusiast
+                Software Developer & AI/ML Enthusiast
               </motion.p>
             </div>
 

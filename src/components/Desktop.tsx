@@ -32,6 +32,8 @@ export default function Desktop() {
 
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
+    // Disable right click menu on mobile
+    if (window.innerWidth < 768) return;
     setContextMenu({ x: e.clientX, y: e.clientY });
   };
 
@@ -103,7 +105,7 @@ export default function Desktop() {
       <div className="absolute inset-0 bg-gradient-to-br from-black/30 via-transparent to-black/40" />
 
       {/* Vignette effect */}
-      <div 
+      <div
         className="absolute inset-0 pointer-events-none"
         style={{
           boxShadow: 'inset 0 0 200px rgba(0,0,0,0.5)',

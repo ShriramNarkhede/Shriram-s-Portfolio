@@ -12,46 +12,29 @@ interface BootScreenProps {
 
 export default function BootScreen({ onComplete }: BootScreenProps) {
   const [progress, setProgress] = useState(0);
-  const [bootMessages, setBootMessages] = useState<string[]>([]);
-  const [bootStage, setBootStage] = useState<"loading" | "logo">("loading");
-
-  const messages = [
-    "[  OK  ] Started System Logging Service",
-    "[  OK  ] Started Network Manager",
-    "[  OK  ] Reached target Network",
-    "[  OK  ] Started Glassmorphic Rendering Engine",
-    "[  OK  ] Mounted Virtual File System",
-    "[  OK  ] Started Docker Application Container Engine",
-    "[  OK  ] Loaded Window Manager",
-    "[  OK  ] Started Portfolio Display Manager",
-    "[  OK  ] Loading Kali Portfolio OS...",
-  ];
 
   useEffect(() => {
-    // Boot messages phase
-    messages.forEach((msg, index) => {
-      setTimeout(() => {
-        setBootMessages((prev) => [...prev, msg]);
-        setProgress(((index + 1) / messages.length) * 70);
-      }, index * 300);
-    });
+    // Start progress animation
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 100);
 
-    // Logo phase
-    setTimeout(() => {
-      setBootStage("logo");
-      setProgress(85);
-    }, messages.length * 300 + 500);
-
-    // Complete phase
-    setTimeout(() => {
-      setProgress(100);
-    }, messages.length * 300 + 2000);
-
-    // Finish
-    setTimeout(() => {
+    // Finish after 1 second
+    const timer = setTimeout(() => {
       onComplete();
-    }, messages.length * 300 + 2800);
-  }, []);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
+  }, [onComplete]);
 
   return (
     <div className="fixed inset-0 w-screen h-screen z-50 bg-black overflow-hidden">
@@ -65,7 +48,7 @@ export default function BootScreen({ onComplete }: BootScreenProps) {
       >
         {/* Animated grid background */}
         <div className="absolute inset-0 w-full h-full opacity-20">
-          <div 
+          <div
             className="w-full h-full"
             style={{
               backgroundImage: `linear-gradient(rgba(0, 188, 212, 0.3) 1px, transparent 1px),
@@ -103,80 +86,53 @@ export default function BootScreen({ onComplete }: BootScreenProps) {
         <div className="absolute inset-0 w-full h-full flex items-center justify-center">
           <div className="w-full max-w-3xl px-8">
             <AnimatePresence mode="wait">
-              {bootStage === "loading" && (
-                <motion.div
-                  key="loading"
+              <motion.div
+                key="logo"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.2 }}
+                className="flex flex-col items-center w-full"
+              >
+                {/* Logo */}
+                <div className="relative mb-8">
+                  <div className="w-32 h-32 rounded-3xl glass-strong flex items-center justify-center relative overflow-hidden">
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-br from-kali-accent/20 to-transparent"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    />
+                    <Image
+                      src="/kalilinux.svg"
+                      alt="Kali Linux"
+                      width={104}
+                      height={104}
+                      className="w-64 h-64 relative z-10"
+                      priority
+                    />
+                  </div>
+                </div>
+
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-5xl md:text-6xl font-bold mb-3 text-center"
+                >
+                  <span className="bg-gradient-to-r from-kali-accent via-blue-400 to-kali-accent bg-clip-text text-transparent">
+                    Kali
+                  </span>
+                  <span className="text-white ml-3">Linux</span>
+                </motion.h1>
+
+                <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="w-full"
+                  transition={{ delay: 0.5 }}
+                  className="text-gray-400 text-lg text-center"
                 >
-                  {/* Boot Messages */}
-                  <div className="mb-12 h-64 overflow-hidden">
-                    {bootMessages.map((msg, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="text-green-400 text-sm font-mono mb-1 flex items-center gap-2"
-                      >
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
-                        {msg}
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-
-              {bootStage === "logo" && (
-                <motion.div
-                  key="logo"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.2 }}
-                  className="flex flex-col items-center w-full"
-                >
-                  {/* Logo */}
-                  <div className="relative mb-8">
-                    <div className="w-32 h-32 rounded-3xl glass-strong flex items-center justify-center relative overflow-hidden">
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-br from-kali-accent/20 to-transparent"
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                      />
-                      <Image
-                        src="/kalilinux.svg"
-                        alt="Kali Linux"
-                        width={104}
-                        height={104}
-                        className="w-64 h-64 relative z-10"
-                        priority
-                      />
-                    </div>
-                  </div>
-
-                  <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="text-5xl md:text-6xl font-bold mb-3 text-center"
-                  >
-                    <span className="bg-gradient-to-r from-kali-accent via-blue-400 to-kali-accent bg-clip-text text-transparent">
-                      Kali
-                    </span>
-                    <span className="text-white ml-3">Linux</span>
-                  </motion.h1>
-
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="text-gray-400 text-lg text-center"
-                  >
-                  2022-2 Customized Version
-                  </motion.p>
-                </motion.div>
-              )}
+                  2022-2 Version
+                </motion.p>
+              </motion.div>
             </AnimatePresence>
 
             {/* Progress Bar */}
